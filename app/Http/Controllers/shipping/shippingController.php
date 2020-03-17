@@ -5,6 +5,7 @@ namespace App\Http\Controllers\shipping;
 use App\CustomClass\CustomValidator;
 use App\CustomClass\Status;
 use App\Http\Controllers\Controller;
+use App\models\client\clientModel;
 use App\models\karani\karaniModel;
 use App\models\shipping\launchShipsModel;
 use App\models\trips\tripListModel;
@@ -57,8 +58,8 @@ class shippingController extends Controller
             return view("errors.404");
         }
         $tripdata = $tripdata[0];
-        
-        return view('trips.viewtrip', compact('tripdata'));
+        $customerlist = clientModel::where("is_active", true)->get();
+        return view('trips.viewtrip', compact('tripdata', 'customerlist'));
     }
     
     

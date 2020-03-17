@@ -265,7 +265,7 @@
 
         <div class="clearfix"></div>
 
-        <div class="content-wrapper">
+        <div class="content-wrapper" id="app">
             @yield('body-content')
             <!-- End container-fluid-->
 
@@ -279,7 +279,7 @@
         <footer class="footer">
             <div class="container">
                 <div class="text-center">
-                    Copyright © 2019 Dashtreme Admin
+                    Copyright © {{gmdate('Y',time())}} Drongo Technology
                 </div>
             </div>
         </footer>

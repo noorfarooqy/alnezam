@@ -6,12 +6,12 @@ window._ = require('lodash');
  * code may be modified to fit the specific needs of your application.
  */
 
-try {
-    window.Popper = require('popper.js').default;
-    window.$ = window.jQuery = require('jquery');
+// try {
+//     window.Popper = require('popper.js').default;
+//     window.$ = window.jQuery = require('jquery');
 
-    require('bootstrap');
-} catch (e) {}
+//     require('bootstrap');
+// } catch (e) {}
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -39,3 +39,15 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+import Error  from "./classes/Error";
+import  Success  from "./classes/Success";
+import Server  from "./classes/server";
+
+// vue component
+import  Loader  from "./classes/Loader";
+
+window.Vue = require("vue");
+window.Error = Error;
+window.Success = Success;
+window.Server = Server;
+window.Loader = Loader;

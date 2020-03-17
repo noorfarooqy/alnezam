@@ -1,0 +1,13 @@
+require ("../bootstrap");
+
+var app = new Vue({
+    el: "#app",
+    data: {
+        
+    },
+    mounted() {
+    },
+    methods: {
+
+    }
+})
