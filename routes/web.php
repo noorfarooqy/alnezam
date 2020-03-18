@@ -35,6 +35,12 @@ Route::middleware('auth')->group(function () {
         Route::get('list', 'karani\karaniController@viewKaraniList');
         Route::post('new', 'karani\karaniController@ApiAddNewKarani')->name('new_karani');
     });
+    Route::prefix('/clients')->group(function () {
+        Route::get('new', 'client\clientController@showNewclientForm');
+        Route::get('list', 'client\clientController@viewclientList');
+        Route::post('list', 'client\clientController@viewclientList');
+        Route::post('new', 'client\clientController@ApiAddNewclient')->name('new_client');
+    });
 });
 
 Route::get('/home', 'HomeController@index')->name('home');

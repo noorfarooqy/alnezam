@@ -1,44 +1,34 @@
 @extends('layouts.mainlayout')
 @section('links')
     
-  <link href="/assets/plugins/bootstrap-switch/bootstrap-switch.min.css" rel="stylesheet">
- 
   <!--Select Plugins-->
   <link href="/assets/plugins/select2/css/select2.min.css" rel="stylesheet"/>
+  <link href="/assets/plugins/bootstrap-switch/bootstrap-switch.min.css" rel="stylesheet">
+ 
 @endsection
 @section('scripts')
     
     <!--Select Plugins Js-->
     <script src="/assets/plugins/select2/js/select2.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.single-select').select2();
-        });
-    </script>
 
     <!--Bootstrap Switch Buttons-->
     <script src="/assets/plugins/bootstrap-switch/bootstrap-switch.min.js"></script>
+    
     <script>
-    $(".bt-switch input[type='checkbox'], .bt-switch input[type='radio']").bootstrapSwitch();
-    var radioswitch = function() {
-        var bt = function() {
-            $(".radio-switch").on("switch-change", function() {
-                $(".radio-switch").bootstrapSwitch("toggleRadioState")
-            }), $(".radio-switch").on("switch-change", function() {
-                $(".radio-switch").bootstrapSwitch("toggleRadioStateAllowUncheck")
-            }), $(".radio-switch").on("switch-change", function() {
-                $(".radio-switch").bootstrapSwitch("toggleRadioStateAllowUncheck", !1)
+        $(document).ready(function() {
+            $('.single-select').select2();
+            $('.client-location').on('change', function(e){
+                console.log('new change ',e);
+                $('select.client-location').trigger('click')
             })
-        };
-        return {
-            init: function() {
-                bt()
-            }
-        }
-    }();
-    $(document).ready(function() {
-        radioswitch.init()
-    });
+
+            $('.client-mark').on('change', function(e){
+                console.log('new change ',e);
+                $('select.client-mark').trigger('click')
+            })
+
+          $(".bt-switch input[type='checkbox'], .bt-switch input[type='radio']").bootstrapSwitch();
+        });
     </script>
 
     <script src="/js/tripitems.js"></script>
@@ -90,7 +80,7 @@
                                     <div class="form-group">
                                         <label for="exampleInputUsername" class="sr-only">Item name</label>
                                         <div class="position-relative has-icon-right">
-                                            <input type="text" id="exampleInputUsername" name="item_name" class="form-control input-shadow"
+                                            <input type="text" id="exampleInputUsername" v-model="ItemDetails.item_name" class="form-control input-shadow"
                                                 placeholder="Enter Item name" >
                                             <div class="form-control-position">
                                                 <i class="zmdi zmdi-collection-item"></i>
@@ -108,7 +98,7 @@
                                     <div class="form-group">
                                         <label for="exampleInputUsername" class="sr-only">Quantity</label>
                                         <div class="position-relative has-icon-right">
-                                            <input type="text" id="exampleInputUsername" name="item_quantity" class="form-control input-shadow"
+                                            <input type="text" id="exampleInputUsername" v-model="ItemDetails.item_quantity" class="form-control input-shadow"
                                                 placeholder="Enter Item quantity" >
                                             <div class="form-control-position">
                                                 <i class="fa fa-list-ol"></i>
@@ -126,7 +116,7 @@
                                     <div class="form-group">
                                         <label for="exampleInputUsername" class="sr-only">Price</label>
                                         <div class="position-relative has-icon-right">
-                                            <input type="text" id="exampleInputUsername" name="item_price" class="form-control input-shadow"
+                                            <input type="text" id="exampleInputUsername" v-model="ItemDetails.item_price" class="form-control input-shadow"
                                                 placeholder="Enter Item price" >
                                             <div class="form-control-position">
                                                 <i class="zmdi zmdi-money-box"></i>
@@ -141,24 +131,28 @@
                                 </div>
 
                                 <div class="col-md-2 col-lg-2">
-                                    <input type="text" disabled value="AED 0.00" class="form-control">
+                                    <input type="text" disabled :value="totalAED" class="form-control">
                                 </div>
                                 <div class="col-md-2 col-lg-2">
-                                    <input type="text" disabled value="USD 0.00" class="form-control">
+                                <input type="text" disabled :value="totalUSD" class="form-control">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-3 col-lg-3">
 
-                                    <select class="form-control single-select" name="launch">
+                                    <select class="form-control single-select client-mark" name="launch" @click.prevent="SelectedItemClient">
                                         <option value="-1">Select Client Mark</option>
-                                        @foreach ($customerlist as $customer)
-                                        <option value="{{$customer->id}}">{{$customer->client_name}}</option>
-                                        @endforeach
+                                        <option v-for="(customer,ckey) in ClientList" :value="customer.id" :key="ckey">
+                                            @{{customer.client_mark}}
+                                        </option>
+                                        
                                     </select>
                                 </div>
                                 <div class="col-md-2 col-lg-2">
-                                    <input type="text" disabled class="form-control" value="Client name">
+                                    <input type="text" disabled class="form-control" v-model="ItemDetails.client_name">
+                                </div>
+                                <div class="col-md-3 col-lg-3 bt-switch">
+                                    <input type="checkbox" checked data-on-color="success" v-model="ItemDetails.item_paid" data-off-color="danger" data-on-text="Paid" data-off-text="Unpaid">  
                                 </div>
                                 <div class="col-md-3 col-lg-3">
                                     <button class="btn btn-info">
@@ -167,7 +161,8 @@
                                 </div>
                             </div>
                             <div class="row mb-4 ml-1">
-                                *ff client doesn't exist <a href=""> Add new client here </a>
+                                *if client doesn't exist <a href="" data-toggle="modal" data-target="#formemodal"> Add new client here </a>
+                                @include('clients.newformmodal')
                             </div>
                             
                         </form>
