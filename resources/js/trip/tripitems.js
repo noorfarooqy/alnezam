@@ -55,7 +55,7 @@ var app = new Vue({
         },
         totalUSD : function ()
         {
-            this.ItemDetails.item_total_usd = (this.ItemDetails.item_total_aed / 3.67).toFixed(4);
+            this.ItemDetails.item_total_usd = (this.ItemDetails.item_total_aed / 3.6687).toFixed(4);
             return "USD "+this.ItemDetails.item_total_usd;
         },
     },
@@ -84,6 +84,8 @@ var app = new Vue({
         setItemList(data)
         {
             // console.log('data ',data);
+            if(data == null)
+                return;
             this.ItemList = data[0];
             this.grand_total_usd = data[1].grand_usd;
             this.grand_total_aed = data[1].grand_aed;
@@ -107,7 +109,8 @@ var app = new Vue({
             this.ItemDetails.resetItemDetails(this.ItemDetails);
             setTimeout(function(){
                 self.resetModals();
-            },5000)
+            },5000);
+            
             $(".bt-switch input#paidCheck, .bt-switch input[type='radio']").bootstrapSwitch();
         },
         setPaymentStatus(event,state)
@@ -155,6 +158,7 @@ var app = new Vue({
         {
             this.ClientList.push(data);
             this.showSuccess('Successfully added new client '+data.client_name);
+            this.resetClient();
         },
         showError(error)
         {
@@ -168,6 +172,17 @@ var app = new Vue({
         {
             this.Error.resetErrorModal()
             this.Success.resetSuccessModal()
+        },
+        resetClient()
+        {
+            this.Client = {
+                client_name: null,
+                client_email:null,
+                client_phone: null,
+                client_location: 1,
+                client_mark: null,
+                
+            }
         }
 
     }

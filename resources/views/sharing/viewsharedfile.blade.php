@@ -1,4 +1,4 @@
-@extends('layouts.mainlayout')
+@extends('mail.layout')
 @section('links')
 <!--Data Tables -->
 <link href="/assets/plugins/bootstrap-datatable/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
@@ -40,7 +40,10 @@
    </script>
    
 @endsection
-@section('body-content')
+@section('pageTitle')
+Al Nezam Al Asasy - {{$tripInfo->trip_name}}
+@endsection
+@section('mail-body')
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-1 col-lg-1"></div>
@@ -48,93 +51,102 @@
              <!-- Breadcrumb-->
      <div class="row pt-2 pb-2">
         <div class="col-sm-9">
-		    <h4 class="page-title">Trip list</h4>
+		    <h4 class="page-title">{{$tripInfo->trip_name}}</h4>
 		    <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="javaScript:void();">List</a></li>
-            <li class="breadcrumb-item"><a href="javaScript:void();">Trip</a></li>
+            <li class="breadcrumb-item"><a href="javaScript:void();">Item</a></li>
             <li class="breadcrumb-item active" aria-current="page"></li>
          </ol>
 	   </div>
 	   <div class="col-sm-3">
-       <div class="btn-group float-sm-right">
-        <button type="button" class="btn btn-light waves-effect waves-light"><i class="fa fa-cog mr-1"></i> Setting</button>
-        <button type="button" class="btn btn-light dropdown-toggle dropdown-toggle-split waves-effect waves-light" data-toggle="dropdown">
-        <span class="caret"></span>
-        </button>
-        <div class="dropdown-menu">
-          <a href="javaScript:void();" class="dropdown-item">Action</a>
-          <a href="javaScript:void();" class="dropdown-item">Another action</a>
-          <a href="javaScript:void();" class="dropdown-item">Something else here</a>
-          <div class="dropdown-divider"></div>
-          <a href="javaScript:void();" class="dropdown-item">Separated link</a>
-        </div>
-      </div>
      </div>
      </div>
     <!-- End Breadcrumb-->
             <div class="row">
                 <div class="col-lg-12">
                   <div class="card">
-                    <div class="card-header"><i class="fa fa-table"></i> Data Exporting</div>
+                    <div class="card-header"><i class="fa fa-table"></i> {{$tripInfo->trip_name}}</div>
                     <div class="card-body">
                       <div class="table-responsive">
                       <table id="example" class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Trip name</th>
-                                <th>Launch name</th>
-                                <th>Karani</th>
-                                <th>Loading port</th>
-                                <th>Destination</th>
-                                <th>Action</th>
+                                <th>Client name</th>
+                                <th>Mark</th>
+                                <th>Item name</th>
+                                <th>Quant</th>
+                                <th>Price</th>
+                                <th>Balance AED</th>
+                                <th>Balance USD</th>
                             </tr>
                         </thead>
                         <tbody>
                             
-                            @foreach ($triplist as $trip)
+                            @foreach ($itemlist as $item)
+                            @php
+                                $client_name = $item->clientInfo->client_name;
+                                $mark = $item->clientInfo->client_mark;
+                            @endphp
                             <tr>
                                 <td>
-                                    {{$trip->trip_name}}
+                                    <a href="/clients/{{$item->clientInfo->id}}/trip/{{$item->trip_id}}">
+                                        {{$client_name}}
+                                    </a>
                                 </td>
                                 <td>
-                                    {{$trip->launchInfo->launch_name}}
+                                    {{$mark}}
                                 </td>
                                 <td>
-                                    {{$trip->karaniInfo->karani_name}}
+                                    {{$item->item_name}}
                                 </td>
                                 <td>
-                                    {{$trip->loading_port}}
+                                    {{$item->item_quantity}}
                                 </td>
                                 <td>
-                                    {{$trip->destination_port}}
+                                    {{$item->item_price}}
                                 </td>
                                 <td>
-                                    
-                                    <div class="btn-group float-sm-right">
-                                        <button type="button" class="btn btn-primary waves-effect waves-light"><i class="fa fa-cog mr-1"></i> Choose Action</button>
-                                        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split waves-effect waves-light" data-toggle="dropdown">
-                                        <span class="caret"></span>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                        <a href="/trip/view/{{$trip->id}}" class="dropdown-item">Add items</a>
-                                        <a href="/items/list/{{$trip->id}}" class="dropdown-item">View items</a>
-                                        <a href="/share/trip/{{$trip->id}}" class="dropdown-item">Share via email</a>
-                                        <a href="/trip/completed/{{$trip->id}}" class="dropdown-item">Mark as complete</a>
-                                        </div>
-                                    </div>
+                                    {{$item->item_total_aed}}
+                                </td>
+                                <td>
+                                    {{$item->item_total_usd}}
                                 </td>
                             </tr>
+                            
                                 
                             @endforeach
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th>Launch name</th>
-                                <th>Owner</th>
-                                <th>Captain</th>
-                                <th>Activity</th>
-                                <th>Adde on</th>
-                                <th>Services</th>
+                                <th>Client name</th>
+                                <th>Client Mark</th>
+                                <th>Item name</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Balance AED</th>
+                                <th>Balance USD</th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th>TOTAL DIRHAM </th>
+                                <th>
+                                    {{$grand_total["grand_aed"]}}
+                                </th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th>TOTAL US DOLLAR </th>
+                                <th>
+                                     {{$grand_total["grand_usd"]}}
+                                </th>
                             </tr>
                         </tfoot>
                     </table>

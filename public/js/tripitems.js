@@ -31931,7 +31931,7 @@ var app = new Vue({
       return "AED " + this.ItemDetails.item_total_aed;
     },
     totalUSD: function totalUSD() {
-      this.ItemDetails.item_total_usd = (this.ItemDetails.item_total_aed / 3.67).toFixed(4);
+      this.ItemDetails.item_total_usd = (this.ItemDetails.item_total_aed / 3.6687).toFixed(4);
       return "USD " + this.ItemDetails.item_total_usd;
     }
   },
@@ -31954,6 +31954,7 @@ var app = new Vue({
     },
     setItemList: function setItemList(data) {
       // console.log('data ',data);
+      if (data == null) return;
       this.ItemList = data[0];
       this.grand_total_usd = data[1].grand_usd;
       this.grand_total_aed = data[1].grand_aed;
@@ -32012,6 +32013,7 @@ var app = new Vue({
     ClientAdded: function ClientAdded(data) {
       this.ClientList.push(data);
       this.showSuccess('Successfully added new client ' + data.client_name);
+      this.resetClient();
     },
     showError: function showError(error) {
       this.Error.showErrorModal(error);
@@ -32022,6 +32024,15 @@ var app = new Vue({
     resetModals: function resetModals() {
       this.Error.resetErrorModal();
       this.Success.resetSuccessModal();
+    },
+    resetClient: function resetClient() {
+      this.Client = {
+        client_name: null,
+        client_email: null,
+        client_phone: null,
+        client_location: 1,
+        client_mark: null
+      };
     }
   }
 });

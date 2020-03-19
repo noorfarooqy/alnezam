@@ -2,6 +2,7 @@
 
 namespace App\models\item;
 
+use App\models\client\clientModel;
 use Illuminate\Database\Eloquent\Model;
 
 class itemModel extends Model
@@ -18,4 +19,9 @@ class itemModel extends Model
         "item_total_usd",
         "item_paid"
     ];
+
+    public function clientInfo()
+    {
+        return $this->belongsTo(clientModel::class, "client_id", "id");
+    }
 }

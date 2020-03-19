@@ -25,7 +25,31 @@ class itemController extends Controller
     {
         return view('item.newitem');
     }
-    public function viewitemList(Request $request)
+    public function viewitemList($trip_id)
+    {
+        $itemlist = itemModel::where("trip_id", $trip_id)->get()->sortBy('client_id');
+        $total_aed = 0;
+        $total_usd = 0;
+        foreach ($itemlist as $key => $item) {
+            # code...
+            $clientinfo = $item->clientInfo;
+
+            setlocale(LC_MONETARY, "en_US");
+            $total_usd +=  $item->item_total_usd;
+            $itemlist[$key]->item_total_usd = money_format("%i", $item->item_total_usd);
+            setlocale(LC_MONETARY, "ar_AE");
+            $total_aed +=  $item->item_total_aed;
+            $itemlist[$key]->item_total_aed = money_format("%i", $item->item_total_aed);
+            $itemlist[$key]->item_price = money_format("%i", $item->item_price);
+        }
+        $tripInfo = tripListModel::where('id', $trip_id)->get()[0];
+        setlocale(LC_MONETARY, "en_US");
+        $grand_total["grand_usd"] = money_format("%i", $total_usd);
+        setlocale(LC_MONETARY, "ar_AE");
+        $grand_total["grand_aed"] = money_format("%i", $total_aed);
+        return view("items.itemlist", compact('itemlist', 'grand_total', 'tripInfo'));
+    }
+    public function ApiviewitemList(Request $request)
     {
 
         if ($request->expectsJson()) {

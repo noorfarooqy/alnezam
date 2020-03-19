@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Al Nezam Al Asasy</title>
+    <title>@yield('pageTitle')</title>
     <!--favicon-->
     <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
     <!-- simplebar CSS-->
@@ -54,7 +54,7 @@
             <div class="user-details">
                 <div class="media align-items-center user-pointer collapsed" data-toggle="collapse"
                     data-target="#user-dropdown">
-                    <div class="avatar"><img class="mr-3 side-user-img" src="https://via.placeholder.com/110x110"
+                    <div class="avatar"><img class="mr-3 side-user-img" src="/assets/images/110x110.png"
                             alt="user avatar"></div>
                     <div class="media-body">
                         <h6 class="side-user-name">
@@ -80,7 +80,7 @@
                             class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="sidebar-submenu">
-                        <li><a href="dashboard-logistics.html"><i class="zmdi zmdi-dot-circle-alt"></i> Home</a></li>
+                        <li><a href="/"><i class="zmdi zmdi-dot-circle-alt"></i> Home</a></li>
                     </ul>
                 </li>
                 <li>
@@ -174,7 +174,7 @@
                                 {{-- <li class="list-group-item">
           <a href="javaScript:void();">
            <div class="media">
-             <div class="avatar"><img class="align-self-start mr-3" src="https://via.placeholder.com/110x110" alt="user avatar"></div>
+             <div class="avatar"><img class="align-self-start mr-3" src="/assets/images/110x110.png" alt="user avatar"></div>
             <div class="media-body">
             <h6 class="mt-0 msg-title">Jhon Deo</h6>
             <p class="msg-info">Lorem ipsum dolor sit amet...</p>
@@ -223,7 +223,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown" href="#">
-                            <span class="user-profile"><img src="https://via.placeholder.com/110x110" class="img-circle"
+                            <span class="user-profile"><img src="/assets/images/110x110.png" class="img-circle"
                                     alt="user avatar"></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right">
@@ -231,7 +231,7 @@
                                 <a href="javaScript:void();">
                                     <div class="media">
                                         <div class="avatar"><img class="align-self-start mr-3"
-                                                src="https://via.placeholder.com/110x110" alt="user avatar"></div>
+                                                src="/assets/images/110x110.png" alt="user avatar"></div>
                                         <div class="media-body">
                                             <h6 class="mt-2 user-title">
                                                 @auth

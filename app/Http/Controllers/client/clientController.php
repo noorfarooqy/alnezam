@@ -6,6 +6,8 @@ use App\CustomClass\CustomValidator;
 use App\CustomClass\Status;
 use App\Http\Controllers\Controller;
 use App\models\client\clientModel;
+use App\models\item\itemModel;
+use App\models\trips\tripListModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -31,6 +33,41 @@ class clientController extends Controller
         // $successmessage = $this->expects_json ? $client_list : 
         $this->Status->setSuccess($client_list);
         return $this->returnResponse(view('clients.clientlist'), compact('client_list'));
+    }
+    public function viewclientItems($client_id, $trip_id)
+    {
+        // return "client id ".$client_id;
+        $itemlist = itemModel::where([
+            ["client_id", $client_id],
+            ["trip_id", $trip_id]
+        ])->get();
+        $total_aed = 0;
+        $total_usd = 0;
+        foreach ($itemlist as $key => $item) {
+            # code...
+
+            setlocale(LC_MONETARY, "en_US");
+            $total_usd +=  $item->item_total_usd;
+            $itemlist[$key]->item_total_usd = money_format("%i", $item->item_total_usd);
+            setlocale(LC_MONETARY, "ar_AE");
+            $total_aed +=  $item->item_total_aed;
+            $itemlist[$key]->item_total_aed = money_format("%i", $item->item_total_aed);
+            $itemlist[$key]->item_price = money_format("%i", $item->item_price);
+        }
+        $client_exists = clientModel::where("id", $client_id)->exists();
+        $trip_exists = tripListModel::where("id", $trip_id)->exists();
+        if($itemlist == null || $itemlist->count() <=0 || !$trip_exists || !$client_exists)
+            return view('errors.404');
+        $clientInfo = clientModel::where('id', $client_id)->get()[0];
+        $tripInfo = tripListModel::where('id', $trip_id)->get()[0];
+        // return $tripInfo;
+
+        setlocale(LC_MONETARY, "en_US");
+        $grand_total["grand_usd"] = money_format("%i", $total_usd);
+        setlocale(LC_MONETARY, "ar_AE");
+        $grand_total["grand_aed"] = money_format("%i", $total_aed);
+        return view("clients.clientitems", compact('itemlist', 'clientInfo', 'tripInfo', 'grand_total'));
+
     }
 
     // 

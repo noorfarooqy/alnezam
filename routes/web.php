@@ -14,7 +14,7 @@
 
 
 Auth::routes();
-
+Route::get('/trip/shared/{share_id}/{trip_id}', 'sharing\sharingController@viewSharedFile');
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
         return view('index');
@@ -38,14 +38,19 @@ Route::middleware('auth')->group(function () {
     Route::prefix('/clients')->group(function () {
         Route::get('new', 'client\clientController@showNewclientForm');
         Route::get('list', 'client\clientController@viewclientList');
+        Route::get('{client_id}/trip/{trip_id}', 'client\clientController@viewclientItems');
         Route::post('list', 'client\clientController@viewclientList');
         Route::post('new', 'client\clientController@ApiAddNewclient')->name('new_client');
     });
     Route::prefix('/items')->group(function () {
         Route::get('new', 'item\itemController@showNewitemForm');
-        Route::get('list', 'item\itemController@viewitemList');
-        Route::post('list', 'item\itemController@viewitemList');
+        Route::get('list/{trip_id}', 'item\itemController@viewitemList');
+        Route::post('list', 'item\itemController@ApiviewitemList');
         Route::post('new', 'item\itemController@ApiAddNewitem')->name('new_item');
+    });
+    Route::prefix('/share')->group(function () {
+        Route::get('trip/{trip_id}', 'sharing\sharingController@showShareTripForm');
+        Route::post('trip', 'sharing\sharingController@shareTripFile')->name('trip_share');
     });
 });
 
