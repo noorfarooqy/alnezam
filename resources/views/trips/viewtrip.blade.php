@@ -27,8 +27,10 @@
                 $('select.client-mark').trigger('click')
             })
 
+         
           $(".bt-switch input[type='checkbox'], .bt-switch input[type='radio']").bootstrapSwitch();
         });
+        window.trip_id = "{{$tripdata->id}}";
     </script>
 
     <script src="/js/tripitems.js"></script>
@@ -67,6 +69,33 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row" v-if="Error.visible">
+                            <div class="alert alert-danger alert-dismissible" role="alert" style="width:100%">
+                                {{-- <button type="button" class="close" data-dismiss="alert">×</button> --}}
+                                 <div class="alert-icon">
+                                  <i class="fa fa-times"></i>
+                                 </div>
+                                 <div class="alert-message">
+                                   <span><strong>Error!</strong> @{{Error.error_text}}</span>
+                                 </div>
+                               </div>
+                           </div>
+                           <div class="row" v-if="Success.visible">
+                            <div class="alert alert-success alert-dismissible" role="alert" style="width:100%">
+                                {{-- <button type="button" class="close" data-dismiss="alert">×</button> --}}
+                                <div class="alert-icon">
+                                 <i class="fa fa-check"></i>
+                                </div>
+                                <div class="alert-message">
+                                  <span><strong>Success!</strong> @{{Success.success_text}}</span>
+                                </div>
+                              </div>
+                           </div>
+                    </div>
+                   
                 </div>
                 <div class="card">
                     <div class="card-header">
@@ -155,7 +184,7 @@
                                     <input type="checkbox" checked data-on-color="success" v-model="ItemDetails.item_paid" data-off-color="danger" data-on-text="Paid" data-off-text="Unpaid">  
                                 </div>
                                 <div class="col-md-3 col-lg-3">
-                                    <button class="btn btn-info">
+                                    <button class="btn btn-info" @click.prevent="addItem">
                                         <i class="fa fa-plus-square"></i>
                                     </button>
                                 </div>
@@ -176,11 +205,23 @@
                                         <th>Price</th>
                                         <th>Total AED</th>
                                         <th>Total USD</th>
-                                        <th>Mark as paid</th>
+                                        <th>Is paid</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+                                    <tr v-for="(item, ikey) in ItemList.slice().reverse()" >
+                                        <td v-text="item.item_name"></td>
+                                        <td v-text="item.item_quantity"></td>
+                                        <td v-text="item.item_price"></td>
+                                        <td v-text="item.item_total_aed"></td>
+                                        <td v-text="item.item_total_usd"></td>
+                                        <td >
+                                            <div class="bt-switch">
+                                                <button class="btn btn-success" v-if="item.item_paid" >Paid</button>
+                                                <button class="btn btn-danger" v-else >Unpaid</button>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -198,7 +239,7 @@
                                         <th></th>
                                         <th>TOTAL DIRHAM </th>
                                         <th>
-                                            AED 0.00
+                                             <span v-text="grand_total_aed"></span>
                                         </th>
                                     </tr>
                                     <tr>
@@ -208,7 +249,7 @@
                                         <th></th>
                                         <th>TOTAL US DOLLAR </th>
                                         <th>
-                                            USD 0.00
+                                             <span v-text="grand_total_usd"></span>
                                         </th>
                                     </tr>
                                 </tfoot>

@@ -41,6 +41,12 @@ Route::middleware('auth')->group(function () {
         Route::post('list', 'client\clientController@viewclientList');
         Route::post('new', 'client\clientController@ApiAddNewclient')->name('new_client');
     });
+    Route::prefix('/items')->group(function () {
+        Route::get('new', 'item\itemController@showNewitemForm');
+        Route::get('list', 'item\itemController@viewitemList');
+        Route::post('list', 'item\itemController@viewitemList');
+        Route::post('new', 'item\itemController@ApiAddNewitem')->name('new_item');
+    });
 });
 
 Route::get('/home', 'HomeController@index')->name('home');

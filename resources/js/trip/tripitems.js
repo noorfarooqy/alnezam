@@ -24,32 +24,91 @@ var app = new Vue({
             item_paid : 0,
             client_mark:null,
             client_name:"Select client mark",
+            trip_id: window.trip_id,
+            resetItemDetails: function(item)
+            {
+                item = {
+                    item_name:null,
+                    item_quantity: 0,
+                    item_price: 0,
+                    item_total_aed: 0,
+                    item_total_usd : 0,
+                    item_paid : 0,
+                    client_mark:null,
+                    client_name:"Select client mark",
+                    trip_id: window.trip_id,
+                }
+            }
             
-        }
+        },
+        grand_total_aed: 0,
+        grand_total_usd: 0,
+        ItemList: []
     },
     computed: {
         
         totalAED: function()
         {
-            this.ItemDetails.item_total_aed = this.ItemDetails.item_price * this.ItemDetails.item_quantity;
-            return "AED "+this.ItemDetails.item_total_aed.toFixed(4);
+            this.ItemDetails.item_total_aed = (this.ItemDetails.item_price * this.ItemDetails.item_quantity);
+            this.ItemList.item_total_aed = this.ItemDetails.item_total_aed.toFixed(4);
+            return "AED "+this.ItemDetails.item_total_aed;
         },
         totalUSD : function ()
         {
-            this.ItemDetails.item_total_usd = this.ItemDetails.item_total_aed / 3.67;
-            return "USD "+this.ItemDetails.item_total_usd.toFixed(4);
-        }
+            this.ItemDetails.item_total_usd = (this.ItemDetails.item_total_aed / 3.67).toFixed(4);
+            return "USD "+this.ItemDetails.item_total_usd;
+        },
     },
     mounted() {
         this.getClientList();
         $(".bt-switch input[type='checkbox'], .bt-switch input[type='radio']").on('switchChange.bootstrapSwitch', 
             this.setPaymentStatus.bind(this)
         );
+        this.getItemList();
+        
+    },
+    filters: {
+
     },
     methods: {
+
+        getGrandTotal(priceaed, priceusd) {
+            this.grand_total_aed += priceaed;
+            this.grand_total_usd += priceusd;
+        },
+        getItemList()
+        {
+            this.Server.setRequest({'trip_id': this.ItemDetails.trip_id});
+            this.Server.serverRequest('/items/list', this.setItemList, this.showError);
+        },
+        setItemList(data)
+        {
+            // console.log('data ',data);
+            this.ItemList = data[0];
+            this.grand_total_usd = data[1].grand_usd;
+            this.grand_total_aed = data[1].grand_aed;
+            this.resetModals();
+
+        },
         addItem()
         {
-
+            this.resetModals();
+            this.Server.setRequest(this.ItemDetails);
+            this.Server.serverRequest('/items/new', this.addedNewItem, this.showError);
+        },
+        addedNewItem(data)
+        {
+            console.log('data ',data);
+            this.ItemList.push(data[0]);
+            this.grand_total_usd = data[1].grand_usd;
+            this.grand_total_aed = data[1].grand_aed;
+            this.showSuccess('Successfully added item ',data[0].item_name);
+            var self = this;
+            this.ItemDetails.resetItemDetails(this.ItemDetails);
+            setTimeout(function(){
+                self.resetModals();
+            },5000)
+            $(".bt-switch input#paidCheck, .bt-switch input[type='radio']").bootstrapSwitch();
         },
         setPaymentStatus(event,state)
         {
