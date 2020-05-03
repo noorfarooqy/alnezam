@@ -11,8 +11,6 @@
 |
  */
 
-
-
 Auth::routes();
 Route::get('/trip/shared/{share_id}/{trip_id}', 'sharing\sharingController@viewSharedFile');
 Route::middleware('auth')->group(function () {
@@ -51,6 +49,19 @@ Route::middleware('auth')->group(function () {
     Route::prefix('/share')->group(function () {
         Route::get('trip/{trip_id}', 'sharing\sharingController@showShareTripForm');
         Route::post('trip', 'sharing\sharingController@shareTripFile')->name('trip_share');
+    });
+
+    Route::prefix('/accounts')->group(function () {
+        Route::get('/type', 'accounts\AccountTypeController@ViewListOfAccountsTypes');
+        Route::post('/type', 'accounts\AccountTypeController@AddNewAccountType');
+        Route::get('/type/{type_id}', 'accounts\AccountsController@ViewAccountsOnGivenType');
+        Route::post('/new', 'accounts\AccountsController@AddNewAccount');
+        Route::get('/account/{ac_id}', 'accounts\AccountsController@OpenEntriesForAccountGiven');
+        Route::prefix('entries')->group(function(){
+            Route::get('/', 'accounts\JournalEntriesController@ShowEntriesPage');
+            Route::post('/new', 'accounts\JournalEntriesController@RecordEntry');
+            Route::get('/{entry_id}', 'accounts\JournalEntriesController@OpenGivenEntry');
+        });
     });
 });
 

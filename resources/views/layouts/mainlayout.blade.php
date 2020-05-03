@@ -86,49 +86,53 @@
                 <li>
                     <a href="javaScript:void();" class="waves-effect">
                         <i class="zmdi zmdi-layers"></i>
-                        <span>Doomaha shipping</span> <i class="fa fa-angle-left pull-right"></i>
-                    </a>
-                    <ul class="sidebar-submenu">
-                        <li><a href="/trip/new"><i class="zmdi zmdi-dot-circle-alt"></i> Trip cusub</a></li>
-                        <li><a href="/trip/list"><i class="zmdi zmdi-dot-circle-alt"></i> List Trips</a></li>
-                        {{-- <li><a href="ui-buttons.html"><i class="zmdi zmdi-dot-circle-alt"></i> Buttons</a></li>
-        <li><a href="ui-nav-tabs.html"><i class="zmdi zmdi-dot-circle-alt"></i> Nav Tabs</a></li> --}}
-                    </ul>
-                </li>
-                <li>
-                    <a href="javaScript:void();" class="waves-effect">
-                        <i class="zmdi zmdi-local-shipping"></i>
                         <span>Launches</span> <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="sidebar-submenu">
-                        <li><a href="/launch/new"><i class="zmdi zmdi-dot-circle-alt"></i> New launch </a></li>
-                        <li><a href="/launch/list"><i class="zmdi zmdi-dot-circle-alt"></i> List launches</a></li>
-                        {{-- <li><a href="ui-buttons.html"><i class="zmdi zmdi-dot-circle-alt"></i> Buttons</a></li>
-        <li><a href="ui-nav-tabs.html"><i class="zmdi zmdi-dot-circle-alt"></i> Nav Tabs</a></li> --}}
+                    
+                    <li><a href="/launch/new"><i class="zmdi zmdi-dot-circle-alt"></i> New launch </a></li>
+                    <li><a href="/launch/list"><i class="zmdi zmdi-dot-circle-alt"></i> List launches</a></li>    
+                    <li>
+                        <a href="javaScript:void();" class="waves-effect">
+                            <i class="zmdi zmdi-layers"></i>
+                            <span>Doomaha shipping</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="/trip/new"><i class="zmdi zmdi-dot-circle-alt"></i> Trip cusub</a></li>
+                            <li><a href="/trip/list"><i class="zmdi zmdi-dot-circle-alt"></i> List Trips</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javaScript:void();" class="waves-effect">
+                            <i class="zmdi zmdi-accounts"></i>
+                            <span>Shipping customers</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="/client/new"><i class="zmdi zmdi-dot-circle-alt"></i> New customer </a></li>
+                            <li><a href="/client/list"><i class="zmdi zmdi-dot-circle-alt"></i> List customers</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javaScript:void();" class="waves-effect">
+                            <i class="zmdi zmdi-accounts"></i>
+                            <span>Karanida</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="/karani/new"><i class="zmdi zmdi-dot-circle-alt"></i> New karani </a></li>
+                            <li><a href="/karani/list"><i class="zmdi zmdi-dot-circle-alt"></i> List Karani</a></li>
+                        </ul>
+                    </li>
                     </ul>
                 </li>
+
                 <li>
                     <a href="javaScript:void();" class="waves-effect">
                         <i class="zmdi zmdi-accounts"></i>
-                        <span>Shipping customers</span> <i class="fa fa-angle-left pull-right"></i>
+                        <span>Accounting</span> <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="sidebar-submenu">
-                        <li><a href="/client/new"><i class="zmdi zmdi-dot-circle-alt"></i> New customer </a></li>
-                        <li><a href="/client/list"><i class="zmdi zmdi-dot-circle-alt"></i> List customers</a></li>
-                        {{-- <li><a href="ui-buttons.html"><i class="zmdi zmdi-dot-circle-alt"></i> Buttons</a></li>
-        <li><a href="ui-nav-tabs.html"><i class="zmdi zmdi-dot-circle-alt"></i> Nav Tabs</a></li> --}}
-                    </ul>
-                </li>
-                <li>
-                    <a href="javaScript:void();" class="waves-effect">
-                        <i class="zmdi zmdi-accounts"></i>
-                        <span>Karanida</span> <i class="fa fa-angle-left pull-right"></i>
-                    </a>
-                    <ul class="sidebar-submenu">
-                        <li><a href="/karani/new"><i class="zmdi zmdi-dot-circle-alt"></i> New karani </a></li>
-                        <li><a href="/karani/list"><i class="zmdi zmdi-dot-circle-alt"></i> List Karani</a></li>
-                        {{-- <li><a href="ui-buttons.html"><i class="zmdi zmdi-dot-circle-alt"></i> Buttons</a></li>
-        <li><a href="ui-nav-tabs.html"><i class="zmdi zmdi-dot-circle-alt"></i> Nav Tabs</a></li> --}}
+                        <li><a href="/accounts/type"><i class="zmdi zmdi-dot-circle-alt"></i> Account types </a></li>
+                        <li><a href="/accounts/entries"><i class="zmdi zmdi-dot-circle-alt"></i> Entries </a></li>
                     </ul>
                 </li>
                 <li class="sidebar-header">LABELS</li>
